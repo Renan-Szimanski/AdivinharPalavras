@@ -9,6 +9,20 @@
     tools:context=".ActivityGame">
 
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="FRUTAS"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pnt"
@@ -16,66 +30,95 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:inputType="text"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nextButtom"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/grey"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/acceptBtn"
+        app:layout_constraintVertical_bias="0.169"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="24dp"
+            android:background="@drawable/baseline_loop_24"
+            android:hint="Trocar"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.849"
+            tools:ignore="HardcodedText" />
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/acceptBtn"
-        android:layout_width="180dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        android:layout_marginStart="24dp"
+        android:paddingVertical="20dp"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@color/dkgreen"
         android:hint="Pronto"
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713"
-        android:backgroundTint="@color/dkgreen"/>
-
-    <Button
-        android:id="@+id/nextButtom"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Começar"
-        android:textColorHint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713"
-        android:backgroundTint="@color/dkgreen"/>
+        app:layout_constraintVertical_bias="0.557"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/titulo"
-        android:layout_width="wrap_content"
+        android:id="@+id/wordTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="17dp"
-        android:layout_marginTop="100dp"
-        android:text="Clique para começar o jogo"
+        android:paddingVertical="10dp"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/grey"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/lghtgrey"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/enterAnswer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        android:layout_marginBottom="220dp"
+        android:layout_marginTop="108dp"
+        android:backgroundTint="@color/white"
         android:ems="10"
         android:hint="Resposta"
         android:inputType="text"
         android:textColor="@color/lghtgrey"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/acceptBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo" />
+        app:layout_constraintTop_toBottomOf="@+id/wordTitle"
+        app:layout_constraintVertical_bias="0.138"
+        tools:ignore="HardcodedText"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

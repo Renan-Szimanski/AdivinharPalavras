@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val start = binding.startbutton
+        val start = binding.startWordGame
 
 
         start.setOnClickListener{

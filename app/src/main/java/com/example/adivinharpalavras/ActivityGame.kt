@@ -22,10 +22,10 @@ class ActivityGame : AppCompatActivity() {
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val mudartexto = binding.titulo //palavra usada
-        val botao = binding.nextButtom
-        val resposta = binding.enterAnswer.text
-        val aceitar = binding.acceptBtn
+        val word = binding.wordTitle //palavra usada
+        val nxtButton = binding.nextButtom
+        val answer = binding.enterAnswer.text
+        val acptButton = binding.acceptBtn
         val pntTxt = binding.pnt
 
         var pontos = 1300
@@ -37,24 +37,21 @@ class ActivityGame : AppCompatActivity() {
 
         //sistema randomico | pega palavras e tira letras aleatórias para a dificuldade
         fun aleatorio(verdadeiro: Boolean){
-            //PALAVRAS ALEATÓRIAS
-             //todas as linhas do arquivo
 
+            pntTxt.text = "Pontos: $pontos"
+            //PALAVRAS ALEATÓRIAS
+
+             //todas as linhas do arquivo
             val randomNumber = Random.nextInt(linhas.size) //numero aleatorio do tamanho da palavra
-                val palavra = linhas[randomNumber].lowercase()
-                mudartexto.text = palavra
+                val palavra = linhas[randomNumber]
+                word.text = palavra.uppercase()
             if(verdadeiro == true){
                 linhas.removeAt(randomNumber)
             }
         }
-        botao.setOnClickListener{
-            if(botao.hint.toString() == "Começar"){
-                aleatorio(false)
-                botao.hint = "Próxima"
-            }else if (pontos < 20 || linhas.size <= 1){ //caso não tenha 20 pontos, não conseguirá outra palavra
+        nxtButton.setOnClickListener{
+            if (pontos < 20 || linhas.size <= 1){ //caso não tenha 20 pontos, não conseguirá outra palavra
                 Toast.makeText(this,"Voce nâo tem pontos suficientes!", Toast.LENGTH_SHORT).show()
-                botao.setBackgroundColor(Color.GRAY)
-                botao.setHintTextColor(Color.DKGRAY)
             }else{
                 //botao de proxima palavra tira -20 pontos ao ser usada
                 aleatorio(false)
@@ -62,18 +59,16 @@ class ActivityGame : AppCompatActivity() {
                 pntTxt.text = "Pontos: $pontos"
             }
         }
-        aceitar.setOnClickListener{
+        acptButton.setOnClickListener{
             //mensagem de campo vazio
-            if (resposta.isEmpty()){
+            if (answer.isEmpty()){
                 Toast.makeText(this,"Coloque uma palavra", Toast.LENGTH_SHORT).show()
             }
-            else if (resposta.toString().lowercase().filterNot { it.isWhitespace() } == mudartexto.text){
+            else if (answer.toString().uppercase().filterNot { it.isWhitespace() } == word.text){
                 pontos += 20
                 pntTxt.text = "Pontos: $pontos"
                 aleatorio(true)
-                botao.setBackgroundColor(R.color.dkgreen)
-                botao.setHintTextColor(Color.WHITE)
-                resposta.clear()
+                answer.clear()
             }
             else{
                 Toast.makeText(this, "Resposta Errada! -30pt", Toast.LENGTH_SHORT).show()
@@ -82,5 +77,6 @@ class ActivityGame : AppCompatActivity() {
 
             }
         }
+        aleatorio(true)
     }
 }
