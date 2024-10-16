@@ -2,6 +2,8 @@ package com.example.adivinharpalavras
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +37,7 @@ class ActivityGame : AppCompatActivity() {
 
         val word = binding.wordTitle //palavra usada
         val nxtButton = binding.nextButtom
-        val answer = binding.enterAnswer.text
+        val answer = binding.enterAnswer
         val acptButton = binding.acceptBtn
         val pntTxt = binding.pnt
         var correctWord = ""
@@ -70,19 +72,45 @@ class ActivityGame : AppCompatActivity() {
                 aleatorio()
                 pontos -= 100
                 pntTxt.text = "Pontos: $pontos"
-                answer.clear()
+                answer.text.clear()
             }
         }
+
+        answer.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                if (answer.text.isEmpty()) {
+                    Toast.makeText(this, "Coloque uma palavra", Toast.LENGTH_SHORT).show()
+                } else if (answer.text.toString().uppercase().filterNot { it.isWhitespace() } == correctWord.uppercase()) {
+                    pontos += 20
+                    pntTxt.text = "Pontos: $pontos"
+                    aleatorio()
+                    answer.text.clear()
+                } else {
+                    Toast.makeText(this, "Resposta Errada! -30pt", Toast.LENGTH_SHORT).show()
+                    pontos -= 30
+                    if (pontos < 0) {
+                        pontos = 0
+                    }
+                    pntTxt.text = "Pontos: $pontos"
+                }
+                true
+            } else {
+                false
+            }
+        }
+
         acptButton.setOnClickListener{
             //mensagem de campo vazio
-            if (answer.isEmpty()){
+            if (answer.text.isEmpty()){
                 Toast.makeText(this,"Coloque uma palavra", Toast.LENGTH_SHORT).show()
             }
             else if (answer.toString().uppercase().filterNot { it.isWhitespace() } == correctWord.uppercase()){
                 pontos += 20
                 pntTxt.text = "Pontos: $pontos"
                 aleatorio()
-                answer.clear()
+                answer.text.clear()
             }
             else{
                 Toast.makeText(this, "Resposta Errada! -30pt", Toast.LENGTH_SHORT).show()
