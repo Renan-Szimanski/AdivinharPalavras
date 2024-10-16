@@ -12,6 +12,18 @@ import kotlin.random.Random
 
 private lateinit var binding: ActivityGameBinding
 
+fun embaralharComFixos(palavra: String): String {
+    val letras = palavra.filter { it.isLetter() }.toList().shuffled()
+    var indiceLetra = 0
+    return palavra.map {
+        if (it.isLetter()) {
+            letras[indiceLetra++]
+        } else {
+            it
+        }
+    }.joinToString("")
+}
+
 class ActivityGame : AppCompatActivity() {
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +40,7 @@ class ActivityGame : AppCompatActivity() {
         val pntTxt = binding.pnt
         var correctWord = ""
 
-        var pontos = 1300
+        var pontos = 130000
 
 
         //abre o arquivo de texto e armazena as linhas na variavel
@@ -44,7 +56,7 @@ class ActivityGame : AppCompatActivity() {
                 var palavra = linhas[randomNumber]
                 linhas.removeAt(randomNumber)
                 correctWord = palavra
-                word.text = palavra.toList().shuffled().joinToString("").uppercase()
+                word.text = embaralharComFixos(correctWord.uppercase())
             }
             else{
                 Toast.makeText(this,"Não há mais palavras!", Toast.LENGTH_SHORT).show()
