@@ -36,26 +36,16 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/nextButtom"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/grey"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acceptBtn"
-        app:layout_constraintVertical_bias="0.169"
-        android:clickable="true">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+
+        <ImageButton
+            android:id="@+id/nextButtom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="50dp"
+            android:background="@drawable/rounded_corner"
             android:layout_margin="24dp"
-            android:background="@drawable/baseline_loop_24"
+            android:src="@drawable/baseline_loop_24"
             android:hint="Trocar"
             android:textColorHint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -66,7 +56,7 @@
             app:layout_constraintVertical_bias="0.849"
             tools:ignore="HardcodedText" />
 
-    </androidx.cardview.widget.CardView>
+
 
     <Button
         android:id="@+id/acceptBtn"
@@ -119,6 +109,4 @@
         app:layout_constraintVertical_bias="0.138"
         tools:ignore="HardcodedText"
         />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
