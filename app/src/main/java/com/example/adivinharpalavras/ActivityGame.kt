@@ -1,7 +1,6 @@
 package com.example.adivinharpalavras
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -27,8 +26,10 @@ class ActivityGame : AppCompatActivity() {
         val answer = binding.enterAnswer.text
         val acptButton = binding.acceptBtn
         val pntTxt = binding.pnt
+        var correctWord = ""
 
         var pontos = 1300
+
 
         //abre o arquivo de texto e armazena as linhas na variavel
         val inputStream = assets.open("words.txt")
@@ -36,27 +37,28 @@ class ActivityGame : AppCompatActivity() {
 
 
         //sistema randomico | pega palavras e tira letras aleatórias para a dificuldade
-        fun aleatorio(verdadeiro: Boolean){
-
-            pntTxt.text = "Pontos: $pontos"
-            //PALAVRAS ALEATÓRIAS
-
-             //todas as linhas do arquivo
-            val randomNumber = Random.nextInt(linhas.size) //numero aleatorio do tamanho da palavra
-                val palavra = linhas[randomNumber]
-                word.text = palavra.uppercase()
-            if(verdadeiro == true){
+        fun aleatorio() {
+            if(linhas.isNotEmpty()){
+                pntTxt.text = "Pontos: $pontos"
+                val randomNumber = Random.nextInt(linhas.size) //numero aleatorio do tamanho das linhas
+                var palavra = linhas[randomNumber]
                 linhas.removeAt(randomNumber)
+                correctWord = palavra
+                word.text = palavra.toList().shuffled().joinToString("").uppercase()
+            }
+            else{
+                Toast.makeText(this,"Não há mais palavras!", Toast.LENGTH_SHORT).show()
             }
         }
         nxtButton.setOnClickListener{
             if (pontos < 20 || linhas.size <= 1){ //caso não tenha 20 pontos, não conseguirá outra palavra
-                Toast.makeText(this,"Voce nâo tem pontos suficientes!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Voce nâo tem pontos suficientes ou não há mais palavras!", Toast.LENGTH_SHORT).show()
             }else{
-                //botao de proxima palavra tira -20 pontos ao ser usada
-                aleatorio(false)
-                pontos -= 20
+                //botao de proxima palavra tira 100 pontos ao ser usada
+                aleatorio()
+                pontos -= 100
                 pntTxt.text = "Pontos: $pontos"
+                answer.clear()
             }
         }
         acptButton.setOnClickListener{
@@ -64,19 +66,19 @@ class ActivityGame : AppCompatActivity() {
             if (answer.isEmpty()){
                 Toast.makeText(this,"Coloque uma palavra", Toast.LENGTH_SHORT).show()
             }
-            else if (answer.toString().uppercase().filterNot { it.isWhitespace() } == word.text){
+            else if (answer.toString().uppercase().filterNot { it.isWhitespace() } == correctWord.uppercase()){
                 pontos += 20
                 pntTxt.text = "Pontos: $pontos"
-                aleatorio(true)
+                aleatorio()
                 answer.clear()
             }
             else{
                 Toast.makeText(this, "Resposta Errada! -30pt", Toast.LENGTH_SHORT).show()
                 pontos -= 30
                 pntTxt.text = "Pontos: $pontos"
-
+                if (pontos < 0){ pontos = 0 }
             }
         }
-        aleatorio(true)
+        aleatorio()
     }
 }
