@@ -18,11 +18,12 @@
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#EDD1D1D1"
+            android:background="#ededed"
             android:paddingBottom="30dp">
 
 
             <ImageButton
+                android:id="@+id/perfilBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
@@ -30,7 +31,8 @@
                 android:layout_marginTop="23dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/rounded_corner"
-                android:src="@drawable/baseline_person_24" />
+                android:src="@drawable/baseline_person_24"
+                android:contentDescription="perfil"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -57,6 +59,7 @@
                         android:layout_height="wrap_content"
                         android:text="Jogador 2"
                         android:textAlignment="center"
+                        android:textColor="@color/darkgrey"
                         android:textSize="17dp" />
 
                     <TextView
@@ -64,7 +67,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="2940Pt"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="@color/darkgrey"/>
 
                 </LinearLayout>
 
@@ -88,14 +92,16 @@
                         android:layout_height="wrap_content"
                         android:text="Jogador 1"
                         android:textAlignment="center"
-                        android:textSize="17dp" />
+                        android:textSize="17dp"
+                        android:textColor="@color/darkgrey"/>
 
                     <TextView
                         android:id="@+id/pnt_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="72900Pt"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="@color/darkgrey"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -116,14 +122,16 @@
                         android:layout_height="wrap_content"
                         android:text="Jogador 3"
                         android:textAlignment="center"
-                        android:textSize="17dp" />
+                        android:textSize="17dp"
+                        android:textColor="@color/darkgrey"/>
 
                     <TextView
                         android:id="@+id/pnt_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="250Pt"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="@color/darkgrey"/>
                 </LinearLayout>
 
 
@@ -185,7 +193,6 @@
                             android:background="@drawable/numbers"
                             android:alpha=".33"
                             />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -42,8 +42,7 @@ class ActivityGame : AppCompatActivity() {
         val pntTxt = binding.pnt
         var correctWord = ""
 
-        var pontos = 130000
-
+        var pontos = 300
 
         //abre o arquivo de texto e armazena as linhas na variavel
         val inputStream = assets.open("words.txt")
@@ -64,6 +63,9 @@ class ActivityGame : AppCompatActivity() {
                 Toast.makeText(this,"Não há mais palavras!", Toast.LENGTH_SHORT).show()
             }
         }
+
+
+
         nxtButton.setOnClickListener{
             if (pontos < 20 || linhas.size <= 1){ //caso não tenha 20 pontos, não conseguirá outra palavra
                 Toast.makeText(this,"Voce nâo tem pontos suficientes ou não há mais palavras!", Toast.LENGTH_SHORT).show()
@@ -76,6 +78,7 @@ class ActivityGame : AppCompatActivity() {
             }
         }
 
+        //aceitar o ENTER como entrada de comando
         answer.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -101,12 +104,13 @@ class ActivityGame : AppCompatActivity() {
             }
         }
 
+        //
         acptButton.setOnClickListener{
             //mensagem de campo vazio
             if (answer.text.isEmpty()){
                 Toast.makeText(this,"Coloque uma palavra", Toast.LENGTH_SHORT).show()
             }
-            else if (answer.toString().uppercase().filterNot { it.isWhitespace() } == correctWord.uppercase()){
+            else if (answer.text.toString().uppercase().filterNot { it.isWhitespace() } == correctWord.uppercase()){
                 pontos += 20
                 pntTxt.text = "Pontos: $pontos"
                 aleatorio()

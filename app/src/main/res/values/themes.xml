@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.AdivinharPalavras" parent="Base.Theme.AdivinharPalavras" />
+
+    <style name="ThemeCustomDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+    </style>
 </resources>
