@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20sp"
+    app:cardCornerRadius="20dp">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/closeDifficulty"
+        android:backgroundTint="#cdadff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_close_24"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        android:contentDescription="Fechar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30sp"
+        android:background="#282828">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DIFICULDADES"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="#b185fd"
+            />
+
+        <RadioGroup
+            android:id="@+id/radioOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+            <RadioButton
+                android:id="@+id/easy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fácil"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white"
+                />
+
+            <RadioButton
+                android:id="@+id/medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Médio"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white"/>
+
+            <RadioButton
+                android:id="@+id/hard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Difícil"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white"/>
+        </RadioGroup>
+
+    <Button
+        android:id="@+id/doneDifficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PRONTO"
+        android:layout_marginHorizontal="25sp"
+        android:textColor="@color/darkgrey"
+        android:backgroundTint="#cdadff"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
