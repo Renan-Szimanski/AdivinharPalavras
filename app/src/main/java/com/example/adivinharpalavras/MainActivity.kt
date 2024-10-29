@@ -22,13 +22,19 @@ class MainActivity : AppCompatActivity() {
 
         val start = binding.startWordGame
         val perfilBtn = binding.perfilBtn
+        val numGame = binding.startNumberGame
 
         start.setOnClickListener {
             showDificultyDialog(1)
         }
 
-        perfilBtn.setOnClickListener {
+        numGame.setOnClickListener {
             showDificultyDialog(2)
+        }
+
+        perfilBtn.setOnClickListener {
+          val intent = Intent(this, ActivityPerfil::class.java)
+            startActivity(intent)
         }
     }
 
@@ -54,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
                 val intent = when (games) {
                     1 -> Intent(this, ActivityGame::class.java)
-                    2 -> Intent(this, ActivityPerfil::class.java)
+                    2 -> Intent(this, ActivityNumGame::class.java)
                     else -> null
                 }
 

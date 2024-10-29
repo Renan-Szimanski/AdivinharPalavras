@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.backend.wasm.ir2wasm.bind
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id ("kotlin-kapt")
+    id ("com.google.devtools.ksp") version ("2.0.21-1.0.26") apply false
 }
 
 android {
@@ -55,7 +57,10 @@ android {
 }
 
 dependencies {
-
+    val room_version = "2.7.0"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
