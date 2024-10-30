@@ -1,24 +1,22 @@
 package com.example.adivinharpalavras
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Nickname
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.adivinharpalavras.databinding.ActivityPerfilBinding
 import com.example.adivinharpalavras.databinding.CreatepersonDialogBinding
 
 
 private lateinit var binding: ActivityPerfilBinding
 
+
 class ActivityPerfil : AppCompatActivity() {
 
         private lateinit var dialog: AlertDialog
+        val dbHelper = DBHelper(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +25,9 @@ class ActivityPerfil : AppCompatActivity() {
         setContentView(binding.root)
 
         val addPerson = binding.addPersonBtn
+
+
+
 
         addPerson.setOnClickListener{
             showDialogBinding()
@@ -39,6 +40,21 @@ class ActivityPerfil : AppCompatActivity() {
         dialogBinding.closeDialog.setOnClickListener { dialog.dismiss() }
         build.setView(dialogBinding.root)
 
+        val crDn = dialogBinding.createDone
+
+
+        //adicionar ao banco
+        crDn.setOnClickListener {
+
+            val nick = dialogBinding.nickPerson.text.toString()
+            val isAdded = dbHelper.addUser(nick)
+
+            if (isAdded){
+                Toast.makeText(this, "Perfil criado com sucesso!", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this, "Erro ao criar o perfil!", Toast.LENGTH_SHORT).show()
+            }
+        }
         dialog = build.create()
         dialog.show()
     }
