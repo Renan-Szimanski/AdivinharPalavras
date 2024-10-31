@@ -26,9 +26,6 @@ class ActivityPerfil : AppCompatActivity() {
 
         val addPerson = binding.addPersonBtn
 
-
-
-
         addPerson.setOnClickListener{
             showDialogBinding()
         }
@@ -42,17 +39,22 @@ class ActivityPerfil : AppCompatActivity() {
 
         val crDn = dialogBinding.createDone
 
-
         //adicionar ao banco
         crDn.setOnClickListener {
-
             val nick = dialogBinding.nickPerson.text.toString()
-            val isAdded = dbHelper.addUser(nick)
+            val isExists = dbHelper.existsPerfil(nick)
 
-            if (isAdded){
-                Toast.makeText(this, "Perfil criado com sucesso!", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this, "Erro ao criar o perfil!", Toast.LENGTH_SHORT).show()
+
+
+            when (isExists){
+                true -> Toast.makeText(this, "Nome já usado!", Toast.LENGTH_SHORT).show()
+                false -> {
+                    val isAdded = dbHelper.addUser(nick)
+                    when (isAdded){
+                        true -> Toast.makeText(this, "Perfil criado com sucesso!", Toast.LENGTH_SHORT).show()
+                        false -> Toast.makeText(this, "Erro ao criar o perfil!", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
         dialog = build.create()

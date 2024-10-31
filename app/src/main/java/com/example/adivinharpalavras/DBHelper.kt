@@ -41,4 +41,24 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return result != -1L
     }
 
+    fun deleteUser(nome: String) : Int {
+        val db = this.writableDatabase
+        val result = db.delete(TABLE_NAME,"$COLUMN_NAME= ?", arrayOf(nome))
+
+        db.close()
+        return result
+    }
+
+    fun existsPerfil(nome: String) : Boolean{
+        val db = this.readableDatabase
+        val select = "SELECT $COLUMN_NAME FROM $TABLE_NAME WHERE $COLUMN_NAME = ?"
+        val cursor = db.rawQuery(select, arrayOf(nome))
+
+        val exists = cursor.moveToFirst()
+        cursor.close()
+        db.close()
+
+        return exists
+    }
+
 }
