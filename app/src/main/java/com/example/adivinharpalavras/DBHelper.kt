@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -47,6 +48,24 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         db.close()
         return result
+    }
+
+    fun selectPerfil(): List<Perfil> {
+        val db = this.readableDatabase
+        val select = "SELECT Name, Points FROM $TABLE_NAME"
+        val cursor = db.rawQuery(select, null)
+        val perfilList = mutableListOf<Perfil>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val name = cursor.getString(cursor.getColumnIndexOrThrow("Name"))
+                val points = cursor.getString(cursor.getColumnIndexOrThrow("Points"))
+                perfilList.add(Perfil(name, points))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        Log.d("Database", "Total profiles loaded: ${perfilList.size}")
+        return perfilList
     }
 
     fun existsPerfil(nome: String) : Boolean{
