@@ -42,12 +42,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return result != -1L
     }
 
-    fun deleteUser(nome: String) : Int {
+    fun deletePerfil(nome: String) : Boolean {
         val db = this.writableDatabase
-        val result = db.delete(TABLE_NAME,"$COLUMN_NAME= ?", arrayOf(nome))
-
-        db.close()
-        return result
+        val whereClause = "name = ?"
+        val whereArgs = arrayOf(nome)
+        val rowsDeleted = db.delete(TABLE_NAME, whereClause, whereArgs)
+        return rowsDeleted > 0
     }
 
     fun selectPerfil(): List<Perfil> {
