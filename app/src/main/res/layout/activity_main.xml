@@ -21,7 +21,6 @@
             android:background="#ededed"
             android:paddingBottom="30dp">
 
-
             <ImageButton
                 android:id="@+id/perfilBtn"
                 android:layout_width="50dp"
@@ -57,18 +56,10 @@
                         android:id="@+id/player_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Jogador 2"
+                        android:text="Jogador 2\n29405"
                         android:textAlignment="center"
                         android:textColor="@color/darkgrey"
                         android:textSize="17dp" />
-
-                    <TextView
-                        android:id="@+id/pnt_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="2940Pt"
-                        android:textAlignment="center"
-                        android:textColor="@color/darkgrey"/>
 
                 </LinearLayout>
 
@@ -90,18 +81,11 @@
                         android:id="@+id/player_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Jogador 1"
+                        android:text="Jogador 1\n72900"
                         android:textAlignment="center"
                         android:textSize="17dp"
                         android:textColor="@color/darkgrey"/>
 
-                    <TextView
-                        android:id="@+id/pnt_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="72900Pt"
-                        android:textAlignment="center"
-                        android:textColor="@color/darkgrey"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -120,27 +104,14 @@
                         android:id="@+id/player_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Jogador 3"
+                        android:text="Jogador 3\n2500"
                         android:textAlignment="center"
                         android:textSize="17dp"
                         android:textColor="@color/darkgrey"/>
-
-                    <TextView
-                        android:id="@+id/pnt_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="250Pt"
-                        android:textAlignment="center"
-                        android:textColor="@color/darkgrey"/>
                 </LinearLayout>
-
-
             </LinearLayout>
 
-
         </RelativeLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -148,7 +119,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
                 android:orientation="vertical"
                 >
-
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/startWordGame"

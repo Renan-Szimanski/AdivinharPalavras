@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    private lateinit var mainActivity: MainActivity
+
 
     companion object{
         private const val DATABASE_NAME = "peril.db"
@@ -64,7 +66,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             } while (cursor.moveToNext())
         }
         cursor.close()
-        Log.d("Database", "Total profiles loaded: ${perfilList.size}")
         return perfilList
     }
 
@@ -78,6 +79,30 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         db.close()
 
         return exists
+    }
+
+    fun showRank(): List<Pair<String, Int>> {
+        val results = mutableListOf<Pair<String, Int>>()
+        try {
+            val db = this.readableDatabase
+            val query = "SELECT Name, Points FROM $TABLE_NAME ORDER BY Points DESC"
+            val cursor = db.rawQuery(query, null)
+
+            if (cursor.moveToFirst()) {
+                do {
+                    val columnName = cursor.getString(cursor.getColumnIndexOrThrow("Name"))
+                    val columnPoints = cursor.getInt(cursor.getColumnIndexOrThrow("Points"))
+
+                    results.add(columnName to columnPoints)
+                } while (cursor.moveToNext())
+            }
+            cursor.close()
+            db.close()
+        } catch (e: Exception) {
+            Log.e("DatabaseError", "Erro ao buscar ranking: ${e.message}")
+        }
+
+        return results.take(3)
     }
 
 }

@@ -1,9 +1,7 @@
 package com.example.adivinharpalavras
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -11,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.adivinharpalavras.databinding.ActivityPerfilBinding
 import com.example.adivinharpalavras.databinding.CreatepersonDialogBinding
-import com.example.adivinharpalavras.databinding.PerfilAdapterBinding
-
 
 private lateinit var binding: ActivityPerfilBinding
 
@@ -30,7 +26,6 @@ class ActivityPerfil : AppCompatActivity() {
         initRecyclerView()
 
         val addPerson = binding.addPersonBtn
-
 
         addPerson.setOnClickListener{
             showDialogBinding()
