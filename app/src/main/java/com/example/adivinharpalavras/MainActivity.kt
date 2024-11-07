@@ -1,5 +1,6 @@
 package com.example.adivinharpalavras
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,11 +15,15 @@ private lateinit var binding: ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var dialog: AlertDialog
+    private lateinit var db: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = DBHelper(this)
+        rank()
 
         val start = binding.startWordGame
         val perfilBtn = binding.perfilBtn
@@ -36,6 +41,7 @@ class MainActivity : AppCompatActivity() {
           val intent = Intent(this, ActivityPerfil::class.java)
             startActivity(intent)
         }
+
     }
 
     private fun showDificultyDialog(games: Int) {
@@ -72,6 +78,25 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Escolha uma dificuldade.", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun rank(){
+        val sec = db.showRank()
+
+        val p1 = binding.player1
+        val p2 = binding.player2
+        val p3 = binding.player3
+
+        if(sec.isNotEmpty()) {
+            p1.text = "${sec.getOrNull(0)?.first ?: "N/A"} \n ${sec.getOrNull(0)?.second ?: 0}"
+            p2.text = "${sec.getOrNull(1)?.first ?: "N/A"} \n ${sec.getOrNull(1)?.second ?: 0}"
+            p3.text = "${sec.getOrNull(2)?.first ?: "N/A"} \n ${sec.getOrNull(2)?.second ?: 0}"
+        }else{
+            p1.text = "N/A \n 0"
+            p2.text = "N/A \n 0"
+            p3.text = "N/A \n 0"
         }
     }
 }
