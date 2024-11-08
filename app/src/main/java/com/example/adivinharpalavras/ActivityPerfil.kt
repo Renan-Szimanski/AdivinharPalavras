@@ -30,6 +30,7 @@ class ActivityPerfil : AppCompatActivity() {
         addPerson.setOnClickListener{
             showDialogBinding()
         }
+
     }
 
     private fun initRecyclerView() {
@@ -46,8 +47,9 @@ class ActivityPerfil : AppCompatActivity() {
         adapter.removeItem(perfil)
     }
 
+
     private fun getList(): List<Perfil>{
-        return dbHelper.selectPerfil()
+        return dbHelper.listPerfil()
     }
 
     private fun showDialogBinding(){

@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    override fun onResume() {
+        super.onResume()
+        rank()
+    }
 
     private fun showDificultyDialog(games: Int) {
         val builder = AlertDialog.Builder(this, R.style.ThemeCustomDialog)

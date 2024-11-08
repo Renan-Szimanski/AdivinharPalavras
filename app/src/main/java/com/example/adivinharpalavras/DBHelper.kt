@@ -44,6 +44,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return result != -1L
     }
 
+    fun selectPerfil(nome: String){
+        val db = this.readableDatabase
+        val whereClause = "name = ?"
+        val whereArgs = arrayOf(nome)
+    }
+
     fun deletePerfil(nome: String) : Boolean {
         val db = this.writableDatabase
         val whereClause = "name = ?"
@@ -52,7 +58,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return rowsDeleted > 0
     }
 
-    fun selectPerfil(): List<Perfil> {
+    fun listPerfil(): List<Perfil> {
         val db = this.readableDatabase
         val select = "SELECT Name, Points FROM $TABLE_NAME"
         val cursor = db.rawQuery(select, null)
@@ -104,5 +110,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         return results.take(3)
     }
+
+
 
 }

@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -29,6 +31,12 @@ class AdapterPerfil(
         holder.deleteIcon.setOnClickListener {
             onDeleteClick(perfil)
         }
+
+        holder.tapIcon.animate().alpha(.2f).setDuration(1000).start()
+
+        holder.itemButton.setOnClickListener{
+
+        }
     }
 
     override fun getItemCount() = myList.size
@@ -37,6 +45,8 @@ class AdapterPerfil(
         val textName: TextView = itemView.findViewById(R.id.user)
         val textPoints: TextView = itemView.findViewById(R.id.pontos)
         val deleteIcon: ImageButton = itemView.findViewById(R.id.deleteIcon)
+        val tapIcon: ImageView = itemView.findViewById(R.id.selectPerfil)
+        val itemButton: CardView = itemView.findViewById(R.id.itemButton)
     }
 
     fun removeItem(perfil: Perfil){
