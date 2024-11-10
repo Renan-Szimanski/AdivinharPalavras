@@ -12,10 +12,12 @@ import com.example.adivinharpalavras.databinding.DifficultDialogBinding
 
 private lateinit var binding: ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var dialog: AlertDialog
     private lateinit var db: DBHelper
+    private lateinit var selPerfil: SelectPerfil
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,18 +25,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         db = DBHelper(this)
-        rank()
+        selPerfil = SelectPerfil(this)
 
         val start = binding.startWordGame
         val perfilBtn = binding.perfilBtn
         val numGame = binding.startNumberGame
 
         start.setOnClickListener {
-            showDificultyDialog(1)
+            verifyPerfil(1)
         }
 
         numGame.setOnClickListener {
-            showDificultyDialog(2)
+            verifyPerfil(2)
         }
 
         perfilBtn.setOnClickListener {
@@ -46,6 +48,22 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         rank()
+        animate()
+    }
+
+    private fun animate(){
+        binding.column1.animate().scaleY(1f).setDuration(500).setStartDelay(500).start()
+        binding.column2.animate().scaleY(1f).setDuration(500).setStartDelay(700).start()
+        binding.column3.animate().scaleY(1f).setDuration(500).setStartDelay(900).start()
+    }
+
+    private fun verifyPerfil(games: Int){
+        when(selPerfil.selecionado()){
+            true -> {
+                showDificultyDialog(games)
+            }
+            false -> Toast.makeText(this, "Selecione um perfil!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun showDificultyDialog(games: Int) {
@@ -82,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Escolha uma dificuldade.", Toast.LENGTH_SHORT).show()
             }
+            
         }
     }
 

@@ -2,12 +2,16 @@ package com.example.adivinharpalavras
 
 import android.content.Context
 
-class selectPerfil(context: Context){
+class SelectPerfil(context: Context){
 
     val db = DBHelper(context)
 
     companion object {
-        var perfilSelecionado: String? = ""
+        var perfilSelecionado: String? = null
+    }
+
+    fun selecionado(): Boolean{
+        return perfilSelecionado?.isNotEmpty() == true
     }
 
     fun selecionarPerfil(nome: String){

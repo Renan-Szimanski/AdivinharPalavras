@@ -42,22 +42,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return result != -1L
     }
 
-    fun selectPerfil(nome: String): List<Pair<String, Int>>{
-        val results = mutableListOf<Pair<String, Int>>()
-        val db = this.readableDatabase
-        val query = "SELECT $nome, Points FROM $TABLE_NAME"
-        val cursor = db.rawQuery(query, null)
-
-        if (cursor.moveToFirst()){
-            val name = cursor.getString(cursor.getColumnIndexOrThrow("Name"))
-            val points = cursor.getInt(cursor.getColumnIndexOrThrow("Points"))
-            results.add(name to points)
-        }
-        cursor.close()
-        db.close()
-        return results
-    }
-
     fun deletePerfil(nome: String) : Boolean {
         val db = this.writableDatabase
         val whereClause = "name = ?"

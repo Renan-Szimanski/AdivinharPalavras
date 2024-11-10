@@ -1,8 +1,6 @@
 package com.example.adivinharpalavras
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -35,13 +33,18 @@ class ActivityPerfil : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        initRecyclerView()
+    }
+
     private fun initRecyclerView() {
         val listaPerfis: MutableList<Perfil> = getList().toMutableList()
         adapter = AdapterPerfil(
             this,
             listaPerfis,
             onSelectClick = { perfil ->
-                val seletorPerfil = selectPerfil(this)
+                val seletorPerfil = SelectPerfil(this)
                 seletorPerfil.selecionarPerfil(perfil.name)
             },
             onDeleteClick = { perfil ->
@@ -84,8 +87,7 @@ class ActivityPerfil : AppCompatActivity() {
                             Toast.makeText(this, "Perfil criado com sucesso!", Toast.LENGTH_SHORT).show()
                             dialog.dismiss()
 
-
-                            val newPerfil = Perfil(name = nick, points = 0)
+                            val newPerfil = Perfil(name = nick, 300)
                             adapter.addItem(newPerfil)
                         }
                         false -> Toast.makeText(this, "Erro ao criar o perfil!", Toast.LENGTH_SHORT).show()

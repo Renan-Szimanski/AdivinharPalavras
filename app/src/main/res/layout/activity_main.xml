@@ -47,6 +47,8 @@
                     android:orientation="vertical">
 
                     <View
+                        android:id="@+id/column2"
+                        android:scaleY="0"
                         android:layout_width="100dp"
                         android:layout_height="110dp"
                         android:layout_gravity="bottom"
@@ -72,6 +74,8 @@
                     android:orientation="vertical">
 
                     <View
+                        android:id="@+id/column1"
+                        android:scaleY="0"
                         android:layout_width="100dp"
                         android:layout_height="180dp"
                         android:layout_gravity="bottom"
@@ -95,6 +99,8 @@
                     android:orientation="vertical">
 
                     <View
+                        android:id="@+id/column3"
+                        android:scaleY="0"
                         android:layout_width="100dp"
                         android:layout_height="70dp"
                         android:layout_gravity="bottom"

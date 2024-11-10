@@ -15,7 +15,7 @@ private lateinit var binding: ActivityGameBinding
 private lateinit var dbHelper: DBHelper
 
 class ActivityGame : AppCompatActivity() {
-    val selPerfil = selectPerfil(this)
+    val selPerfil = SelectPerfil(this)
     private lateinit var correctWord: String
     private lateinit var word: TextView
     private lateinit var pntTxt: TextView
@@ -51,7 +51,6 @@ class ActivityGame : AppCompatActivity() {
                 Toast.makeText(this, "Você não tem pontos suficientes ou não há mais palavras!", Toast.LENGTH_SHORT).show()
             } else {
                 pontos = selPerfil.pontuacao(-100)
-                pntTxt.text = "Pontos: $pontos"
                 setDifficulty(difficulty)
                 answer.text.clear()
             }
@@ -78,14 +77,12 @@ class ActivityGame : AppCompatActivity() {
             Toast.makeText(this, "Coloque uma palavra", Toast.LENGTH_SHORT).show()
         } else if (resposta.uppercase().filterNot { it.isWhitespace() } == correctWord.uppercase()) {
             pontos = selPerfil.pontuacao(20)
-            pntTxt.text = "Pontos: $pontos"
             setDifficulty(difficulty)
             binding.enterAnswer.text.clear()
         } else {
             Toast.makeText(this, "Resposta Errada! -30pt", Toast.LENGTH_SHORT).show()
             pontos = selPerfil.pontuacao(-30)
             if (pontos < 0) pontos = 0
-            pntTxt.text = "Pontos: $pontos"
         }
     }
 
@@ -104,8 +101,11 @@ class ActivityGame : AppCompatActivity() {
             palavra = linhas[randomNumber]
             linhas.removeAt(randomNumber)
             correctWord = palavra
+            pontos = selPerfil.pontuacao(0)
+            pntTxt.text = "Pontos: $pontos"
         } else {
             Toast.makeText(this, "Não há mais palavras!", Toast.LENGTH_SHORT).show()
+            pntTxt.text = "Pontos: $pontos"
         }
     }
 
