@@ -1,21 +1,26 @@
 package com.example.adivinharpalavras
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.compose.ui.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 
 
-data class Perfil(val name: String, val points: String)
+data class Perfil(val name: String, var points: Int)
 
 class AdapterPerfil(
+    private val context: Context,
     private val myList: MutableList<Perfil>,
-    private val onDeleteClick: (Perfil) -> Unit
+    private val onDeleteClick: (Perfil) -> Unit,
+    private val onSelectClick: (Perfil) -> Unit
 ) : RecyclerView.Adapter<AdapterPerfil.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -26,17 +31,17 @@ class AdapterPerfil(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val perfil = myList[position]
         holder.textName.text = perfil.name
-        holder.textPoints.text = perfil.points
+        holder.textPoints.text = perfil.points.toString()
 
         holder.deleteIcon.setOnClickListener {
             onDeleteClick(perfil)
         }
 
-        holder.tapIcon.animate().alpha(.2f).setDuration(1000).start()
-
-        holder.itemButton.setOnClickListener{
-
+        holder.itemButton.setOnClickListener {
+            onSelectClick(perfil)
         }
+
+        holder.tapIcon.animate().alpha(.2f).setDuration(1000).start()
     }
 
     override fun getItemCount() = myList.size
@@ -55,5 +60,10 @@ class AdapterPerfil(
             myList.removeAt(position)
             notifyItemRemoved(position)
         }
+    }
+
+    fun addItem(perfil: Perfil) {
+        myList.add(perfil)
+        notifyItemInserted(myList.size - 1)
     }
 }

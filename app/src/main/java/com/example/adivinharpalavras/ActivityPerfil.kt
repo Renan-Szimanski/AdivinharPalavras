@@ -1,6 +1,8 @@
 package com.example.adivinharpalavras
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -35,9 +37,17 @@ class ActivityPerfil : AppCompatActivity() {
 
     private fun initRecyclerView() {
         val listaPerfis: MutableList<Perfil> = getList().toMutableList()
-        adapter = AdapterPerfil(listaPerfis) { perfil ->
-            deletePerfil(perfil)
-        }
+        adapter = AdapterPerfil(
+            this,
+            listaPerfis,
+            onSelectClick = { perfil ->
+                val seletorPerfil = selectPerfil(this)
+                seletorPerfil.selecionarPerfil(perfil.name)
+            },
+            onDeleteClick = { perfil ->
+                deletePerfil(perfil)
+            }
+        )
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
     }
@@ -47,12 +57,11 @@ class ActivityPerfil : AppCompatActivity() {
         adapter.removeItem(perfil)
     }
 
-
     private fun getList(): List<Perfil>{
         return dbHelper.listPerfil()
     }
 
-    private fun showDialogBinding(){
+    private fun showDialogBinding() {
         val build = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
         val dialogBinding: CreatepersonDialogBinding = CreatepersonDialogBinding.inflate(
             LayoutInflater.from(this))
@@ -61,19 +70,23 @@ class ActivityPerfil : AppCompatActivity() {
 
         val crDn = dialogBinding.createDone
 
-        //adicionar ao banco
+        // adicionar ao banco e RecyclerView
         crDn.setOnClickListener {
             val nick = dialogBinding.nickPerson.text.toString()
             val isExists = dbHelper.existsPerfil(nick)
 
-            when (isExists){
+            when (isExists) {
                 true -> Toast.makeText(this, "Nome já usado!", Toast.LENGTH_SHORT).show()
                 false -> {
                     val isAdded = dbHelper.addUser(nick)
-                    when (isAdded){
-                        true -> {   Toast.makeText(this, "Perfil criado com sucesso!", Toast.LENGTH_SHORT).show()
+                    when (isAdded) {
+                        true -> {
+                            Toast.makeText(this, "Perfil criado com sucesso!", Toast.LENGTH_SHORT).show()
                             dialog.dismiss()
-                            initRecyclerView()
+
+
+                            val newPerfil = Perfil(name = nick, points = 0)
+                            adapter.addItem(newPerfil)
                         }
                         false -> Toast.makeText(this, "Erro ao criar o perfil!", Toast.LENGTH_SHORT).show()
                     }
@@ -83,6 +96,7 @@ class ActivityPerfil : AppCompatActivity() {
         dialog = build.create()
         dialog.show()
     }
+
 
 
 
