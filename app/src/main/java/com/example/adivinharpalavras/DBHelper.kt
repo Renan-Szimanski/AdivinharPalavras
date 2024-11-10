@@ -7,12 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-    private lateinit var mainActivity: MainActivity
-
 
     companion object{
         private const val DATABASE_NAME = "peril.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val TABLE_NAME = "Users"
         private const val COLUMN_ID = "ID"
         private const val COLUMN_NAME = "Name"
@@ -44,6 +42,22 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return result != -1L
     }
 
+    fun selectPerfil(nome: String): List<Pair<String, Int>>{
+        val results = mutableListOf<Pair<String, Int>>()
+        val db = this.readableDatabase
+        val query = "SELECT $nome, Points FROM $TABLE_NAME"
+        val cursor = db.rawQuery(query, null)
+
+        if (cursor.moveToFirst()){
+            val name = cursor.getString(cursor.getColumnIndexOrThrow("Name"))
+            val points = cursor.getInt(cursor.getColumnIndexOrThrow("Points"))
+            results.add(name to points)
+        }
+        cursor.close()
+        db.close()
+        return results
+    }
+
     fun deletePerfil(nome: String) : Boolean {
         val db = this.writableDatabase
         val whereClause = "name = ?"
@@ -52,7 +66,28 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return rowsDeleted > 0
     }
 
-    fun selectPerfil(): List<Perfil> {
+    fun addPoints(name: String, addPoints: Int): Int {
+        val db = this.writableDatabase
+
+        var newPoints = 0
+        val cursor = db.rawQuery("SELECT $COLUMN_POINTS FROM $TABLE_NAME WHERE $COLUMN_NAME=?", arrayOf(name))
+
+        if (cursor.moveToFirst()) {
+            val currentPoints = cursor.getInt(0)
+            newPoints = currentPoints + addPoints
+
+            val values = ContentValues().apply {
+                put("Points", newPoints)
+            }
+            db.update(TABLE_NAME, values, "$COLUMN_NAME=?", arrayOf(name))
+        }
+
+        cursor.close()
+        db.close()
+        return newPoints
+    }
+
+    fun listPerfil(): List<Perfil> {
         val db = this.readableDatabase
         val select = "SELECT Name, Points FROM $TABLE_NAME"
         val cursor = db.rawQuery(select, null)
@@ -61,7 +96,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         if (cursor.moveToFirst()) {
             do {
                 val name = cursor.getString(cursor.getColumnIndexOrThrow("Name"))
-                val points = cursor.getString(cursor.getColumnIndexOrThrow("Points"))
+                val points = cursor.getInt(cursor.getColumnIndexOrThrow("Points"))
                 perfilList.add(Perfil(name, points))
             } while (cursor.moveToNext())
         }
@@ -104,5 +139,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         return results.take(3)
     }
+
+
 
 }

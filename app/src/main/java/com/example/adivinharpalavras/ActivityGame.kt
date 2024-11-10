@@ -12,25 +12,17 @@ import com.example.adivinharpalavras.databinding.ActivityGameBinding
 import kotlin.random.Random
 
 private lateinit var binding: ActivityGameBinding
-
-fun embaralharComFixos(palavra: String): String {
-    val letras = palavra.filter { it.isLetter() }.toList().shuffled()
-    var indiceLetra = 0
-    return palavra.map {
-        if (it.isLetter()) {
-            letras[indiceLetra++]
-        } else {
-            it
-        }
-    }.joinToString("")
-}
+private lateinit var dbHelper: DBHelper
 
 class ActivityGame : AppCompatActivity() {
+    val selPerfil = selectPerfil(this)
     private lateinit var correctWord: String
     private lateinit var word: TextView
     private lateinit var pntTxt: TextView
     private lateinit var palavra: String
-    private var pontos = 300
+    private var pontos = 0
+
+
     private val linhas: MutableList<String> by lazy {
         assets.open("words.txt").bufferedReader().use { it.readLines().toMutableList() }
     }
@@ -53,12 +45,12 @@ class ActivityGame : AppCompatActivity() {
         val answer = binding.enterAnswer
         val acptButton = binding.acceptBtn
 
+
         nxtButton.setOnClickListener {
             if (pontos < 20 || linhas.size <= 1) {
                 Toast.makeText(this, "Você não tem pontos suficientes ou não há mais palavras!", Toast.LENGTH_SHORT).show()
             } else {
-
-                pontos -= 100
+                pontos = selPerfil.pontuacao(-100)
                 pntTxt.text = "Pontos: $pontos"
                 setDifficulty(difficulty)
                 answer.text.clear()
@@ -85,13 +77,13 @@ class ActivityGame : AppCompatActivity() {
         if (resposta.isEmpty()) {
             Toast.makeText(this, "Coloque uma palavra", Toast.LENGTH_SHORT).show()
         } else if (resposta.uppercase().filterNot { it.isWhitespace() } == correctWord.uppercase()) {
-            pontos += 20
+            pontos = selPerfil.pontuacao(20)
             pntTxt.text = "Pontos: $pontos"
             setDifficulty(difficulty)
             binding.enterAnswer.text.clear()
         } else {
             Toast.makeText(this, "Resposta Errada! -30pt", Toast.LENGTH_SHORT).show()
-            pontos -= 30
+            pontos = selPerfil.pontuacao(-30)
             if (pontos < 0) pontos = 0
             pntTxt.text = "Pontos: $pontos"
         }
@@ -132,4 +124,17 @@ class ActivityGame : AppCompatActivity() {
         aleatorio()
         word.text = embaralharComFixos(correctWord.uppercase())
     }
+
+    fun embaralharComFixos(palavra: String): String {
+        val letras = palavra.filter { it.isLetter() }.toList().shuffled()
+        var indiceLetra = 0
+        return palavra.map {
+            if (it.isLetter()) {
+                letras[indiceLetra++]
+            } else {
+                it
+            }
+        }.joinToString("")
+    }
+
 }
