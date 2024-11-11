@@ -31,7 +31,9 @@
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/rounded_corner"
                 android:src="@drawable/baseline_person_24"
-                android:contentDescription="perfil"/>
+                android:contentDescription="perfil"
+                android:scaleX="0"
+                android:scaleY="0"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -59,6 +61,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Jogador 2\n29405"
+                        android:translationX="-100dp"
                         android:textAlignment="center"
                         android:textColor="@color/darkgrey"
                         android:textSize="17dp" />
@@ -86,6 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Jogador 1\n72900"
+                        android:translationY="45dp"
                         android:textAlignment="center"
                         android:textSize="17dp"
                         android:textColor="@color/darkgrey"/>
@@ -111,6 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Jogador 3\n2500"
+                        android:translationX="100dp"
                         android:textAlignment="center"
                         android:textSize="17dp"
                         android:textColor="@color/darkgrey"/>
@@ -134,7 +139,9 @@
                         android:layout_marginTop="30dp"
                         android:layout_marginBottom="15dp"
                         app:cardCornerRadius="10dp"
-                        android:backgroundTint="@color/grey">
+                        android:backgroundTint="@color/grey"
+                        android:translationY="50dp"
+                        android:alpha="0">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -159,9 +166,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_marginHorizontal="30dp"
-                       android:layout_marginVertical="15dp"
+                        android:layout_marginVertical="15dp"
                         app:cardCornerRadius="10dp"
-                        android:backgroundTint="@color/grey">
+                        android:backgroundTint="@color/grey"
+                        android:translationY="50dp"
+                        android:alpha="0">
 
                         <ImageView
                             android:layout_width="wrap_content"

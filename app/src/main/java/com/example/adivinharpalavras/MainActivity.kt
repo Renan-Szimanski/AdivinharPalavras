@@ -55,6 +55,16 @@ class MainActivity : AppCompatActivity() {
         binding.column1.animate().scaleY(1f).setDuration(500).setStartDelay(500).start()
         binding.column2.animate().scaleY(1f).setDuration(500).setStartDelay(700).start()
         binding.column3.animate().scaleY(1f).setDuration(500).setStartDelay(900).start()
+
+        binding.player1.animate().translationY(0f).setDuration(300).setStartDelay(550).start()
+        binding.player2.animate().translationX(0f).setDuration(300).setStartDelay(750).start()
+        binding.player3.animate().translationX(0f).setDuration(300).setStartDelay(950).start()
+
+        binding.startWordGame.animate().translationY(0f).alpha(1f).setDuration(500).setStartDelay(500)
+        binding.startNumberGame.animate().translationY(0f).alpha(1f).setDuration(500).setStartDelay(600)
+
+        binding.perfilBtn.animate().scaleX(1f).setDuration(500).setStartDelay(900).start()
+        binding.perfilBtn.animate().scaleY(1f).setDuration(500).setStartDelay(900).start()
     }
 
     private fun verifyPerfil(games: Int){

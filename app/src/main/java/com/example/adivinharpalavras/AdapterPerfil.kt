@@ -39,6 +39,10 @@ class AdapterPerfil(
 
         holder.itemButton.setOnClickListener {
             onSelectClick(perfil)
+            holder.tapIcon.animate().alpha(1f).setDuration(500).withEndAction {
+                holder.tapIcon.animate().alpha(.2f).setDuration(500).start()
+            }.start()
+
         }
 
         holder.tapIcon.animate().alpha(.2f).setDuration(1000).start()
