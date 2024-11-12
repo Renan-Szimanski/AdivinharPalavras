@@ -22,7 +22,6 @@ class ActivityGame : AppCompatActivity() {
     private lateinit var palavra: String
     private var pontos = 0
 
-
     private val linhas: MutableList<String> by lazy {
         assets.open("words.txt").bufferedReader().use { it.readLines().toMutableList() }
     }
@@ -47,7 +46,7 @@ class ActivityGame : AppCompatActivity() {
 
 
         nxtButton.setOnClickListener {
-            if (pontos < 20 || linhas.size <= 1) {
+            if (pontos < 100 || linhas.size <= 1) {
                 Toast.makeText(this, "Você não tem pontos suficientes ou não há mais palavras!", Toast.LENGTH_SHORT).show()
             } else {
                 pontos = selPerfil.pontuacao(-100)
@@ -55,7 +54,6 @@ class ActivityGame : AppCompatActivity() {
                 answer.text.clear()
             }
         }
-
 
         answer.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
@@ -81,12 +79,21 @@ class ActivityGame : AppCompatActivity() {
             binding.enterAnswer.text.clear()
         } else {
             Toast.makeText(this, "Resposta Errada! -30pt", Toast.LENGTH_SHORT).show()
-            pontos = selPerfil.pontuacao(-30)
+            //verificação para não ter pontos negativos
+            if (pontos < 30){
+                pontos = selPerfil.pontuacao(-pontos)
+            }else{
+                pontos = selPerfil.pontuacao(-30)
+            }
+
+            pntTxt.text = "Pontos: $pontos"
             if (pontos < 0) pontos = 0
         }
     }
 
     private fun setDifficulty(difficulty: String?) {
+        pontos = selPerfil.pontuacao(0)
+        pntTxt.text = "Pontos: $pontos"
         when (difficulty) {
             "EASY" -> easy()
             "MEDIUM" -> medium()
@@ -101,11 +108,8 @@ class ActivityGame : AppCompatActivity() {
             palavra = linhas[randomNumber]
             linhas.removeAt(randomNumber)
             correctWord = palavra
-            pontos = selPerfil.pontuacao(0)
-            pntTxt.text = "Pontos: $pontos"
         } else {
             Toast.makeText(this, "Não há mais palavras!", Toast.LENGTH_SHORT).show()
-            pntTxt.text = "Pontos: $pontos"
         }
     }
 
@@ -136,5 +140,4 @@ class ActivityGame : AppCompatActivity() {
             }
         }.joinToString("")
     }
-
 }
