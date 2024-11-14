@@ -13,6 +13,12 @@
         android:theme="@style/Theme.AdivinharPalavras"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityGuessNumber"
+            android:exported="false" />
+        <activity
+            android:name=".activity_num_game"
+            android:exported="false" />
+        <activity
             android:name=".ActivityPerfil"
             android:exported="false" />
         <activity

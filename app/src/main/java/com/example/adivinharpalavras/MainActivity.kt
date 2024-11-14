@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
                 val intent = when (games) {
                     1 -> Intent(this, ActivityGame::class.java)
-                    2 -> Intent(this, ActivityNumGame::class.java)
+                    2 -> Intent(this, ActivityGuessNumber::class.java)
                     else -> null
                 }
 
