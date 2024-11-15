@@ -25,11 +25,16 @@ class ActivityGuessNumber : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
-        val difficulty = intent.getStringExtra("DIFICULDADE")
-        setDifficulty(difficulty)
-
         titulo = binding.textView
 
+        val difficulty = intent.getStringExtra("DIFICULDADE")
+        setDifficulty(difficulty)
+    }
+
+    companion object {
+        var dificuldadeEscolhida: Int? = null
+        var range: Int = 100 //valores padrões de FACIL
+        var tips: Int = 5
     }
 
     private fun setDifficulty(dif: String?){
@@ -42,6 +47,7 @@ class ActivityGuessNumber : AppCompatActivity() {
 
     private fun randomNumber(range: Int){
         val currentNum = Random.nextInt(range)
+        titulo.text = "sim"
         Log.d("ActivityGuessNumber", "randomNumber: $currentNum") // ultima parada, vendo os numeros aleatorios
 
         dicas(currentNum)
@@ -59,11 +65,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         }
     }
 
-    companion object {
-        var dificuldadeEscolhida: Int? = null
-        var range: Int = 100 //valores padrões de FACIL
-        var tips: Int = 5
-    }
+
 
     //dificuldades
     private fun easy(){
