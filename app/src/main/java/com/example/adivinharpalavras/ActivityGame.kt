@@ -45,6 +45,7 @@ class ActivityGame : AppCompatActivity() {
         val acptButton = binding.acceptBtn
 
 
+
         nxtButton.setOnClickListener {
             if (pontos < 100 || linhas.size <= 1) {
                 Toast.makeText(this, "Você não tem pontos suficientes ou não há mais palavras!", Toast.LENGTH_SHORT).show()
