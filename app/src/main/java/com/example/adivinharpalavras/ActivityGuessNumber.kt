@@ -3,14 +3,13 @@ package com.example.adivinharpalavras
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.adivinharpalavras.databinding.ActivityGameBinding
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.adivinharpalavras.databinding.ActivityGuessNumberBinding
 import kotlin.random.Random
 
@@ -19,8 +18,11 @@ private lateinit var binding: ActivityGuessNumberBinding
 private lateinit var selectPerfil: SelectPerfil
 class ActivityGuessNumber : AppCompatActivity() {
 
+    private lateinit var adapterTips: AdapterTips
     private lateinit var titulo: TextView
+    private lateinit var tipButton: Button
     private lateinit var digNumber: EditText
+    private lateinit var showPoits: TextView
     private var currentNum: Int = 0
     private var pontos = 0
 
@@ -30,6 +32,9 @@ class ActivityGuessNumber : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
+        showPoits = binding.showPoints
+        adapterTips = AdapterTips(this)
+        tipButton = binding.tipButton
         selectPerfil = SelectPerfil(this)
         digNumber = binding.enterNumber
         titulo = binding.textView
@@ -42,6 +47,10 @@ class ActivityGuessNumber : AppCompatActivity() {
         btnNumber.setOnClickListener {
             verifyAnswer()
         }
+        tipButton.setOnClickListener {
+            dicas(currentNum)
+        }
+        initRecyclerView()
     }
 
     private fun verifyAnswer(){
@@ -50,13 +59,18 @@ class ActivityGuessNumber : AppCompatActivity() {
             val inputUser = inputText.toIntOrNull()
             if (inputUser != null && inputUser == currentNum){
                 pontos = selectPerfil.pontuacao(win)
-                Toast.makeText(this, "sim", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Acertou, +$win pontos", Toast.LENGTH_SHORT).show()
                 digNumber.text.clear()
                 randomNumber(range)
             }else{
                 pontos = selectPerfil.pontuacao(lose)
+                showPoits.text = pontos.toString()
                 digNumber.text.clear()
-                Toast.makeText(this, "nao", Toast.LENGTH_SHORT).show()
+                if (currentNum < inputUser!!){
+                    Toast.makeText(this, "Numero correto é menor, $lose pontos", Toast.LENGTH_SHORT).show()
+                }else if (currentNum > inputUser){
+                    Toast.makeText(this, "Numero correto é maior, $lose pontos", Toast.LENGTH_SHORT).show()
+                }
             }
         }else{
             Toast.makeText(this, "Digite um número", Toast.LENGTH_SHORT).show()
@@ -69,6 +83,15 @@ class ActivityGuessNumber : AppCompatActivity() {
         var tips: Int = 0
         var win: Int = 0
         var lose: Int = 0
+        val newTips = mutableListOf<Tips>()
+    }
+
+    private fun initRecyclerView(){
+        val tipsList: MutableList<Tips> = newTips
+        adapterTips = AdapterTips(this, tipsList)
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapterTips
     }
 
     private fun setDifficulty(dif: String?){
@@ -84,6 +107,8 @@ class ActivityGuessNumber : AppCompatActivity() {
         currentNum = Random.nextInt(range)
         Log.d("ActivityGuessNumber", "randomNumber: $currentNum") // ultima parada, vendo os numeros aleatorios
         titulo.text = "Escolha um número de um a ${Companion.range}"
+        pontos = selectPerfil.pontuacao(0)
+        showPoits.text = pontos.toString()
     }
 
     private fun dicas(currentNum: Int){
@@ -95,7 +120,7 @@ class ActivityGuessNumber : AppCompatActivity() {
                 val aftrNum = Random.nextInt(currentNum, range)
                 val bfrNum = Random.nextInt(1, currentNum)
 
-                titulo.text = "Seu número está entre $bfrNum e $aftrNum."
+                adapterTips.addTips(Tips("Seu número está entre $bfrNum e $aftrNum."))
             }    
         }else{
             Toast.makeText(this, "Você não tem pontos suficientes!", Toast.LENGTH_SHORT).show()
@@ -105,7 +130,7 @@ class ActivityGuessNumber : AppCompatActivity() {
     //dificuldades
     private fun easy(){
         range = 100
-        tips = 5
+        tips = 3
         win = 50
         lose = -15
         randomNumber(range)

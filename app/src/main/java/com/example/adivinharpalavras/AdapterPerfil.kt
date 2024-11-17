@@ -8,11 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.compose.ui.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
-
 
 data class Perfil(val name: String, var points: Int)
 
