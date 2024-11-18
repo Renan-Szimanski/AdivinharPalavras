@@ -1,8 +1,11 @@
 package com.example.adivinharpalavras
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -44,9 +47,21 @@ class ActivityGuessNumber : AppCompatActivity() {
         val difficulty = intent.getStringExtra("DIFICULDADE")
         setDifficulty(difficulty)
 
+        digNumber.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
+                verifyAnswer()
+                true
+            } else {
+                false
+            }
+        }
+
+
         btnNumber.setOnClickListener {
             verifyAnswer()
         }
+
         tipButton.setOnClickListener {
             dicas(currentNum)
         }
@@ -63,13 +78,18 @@ class ActivityGuessNumber : AppCompatActivity() {
                 digNumber.text.clear()
                 randomNumber(range)
             }else{
-                pontos = selectPerfil.pontuacao(lose)
+                pontos = selectPerfil.pontuacao(0)
+                if (pontos < lose){
+                    pontos = selectPerfil.pontuacao(-pontos)
+                }else{
+                    pontos = selectPerfil.pontuacao(-lose)
+                }
                 showPoits.text = pontos.toString()
                 digNumber.text.clear()
                 if (currentNum < inputUser!!){
-                    Toast.makeText(this, "Numero correto é menor, $lose pontos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Numero correto é menor, -$lose pontos", Toast.LENGTH_SHORT).show()
                 }else if (currentNum > inputUser){
-                    Toast.makeText(this, "Numero correto é maior, $lose pontos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Numero correto é maior, -$lose pontos", Toast.LENGTH_SHORT).show()
                 }
             }
         }else{
@@ -112,7 +132,9 @@ class ActivityGuessNumber : AppCompatActivity() {
     }
 
     private fun dicas(currentNum: Int){
-        if (pontos > 30){
+        if (pontos > 5){
+            pontos = selectPerfil.pontuacao(-5)
+            showPoits.text = pontos.toString()
             if (tips < 1){
                 Toast.makeText(this, "Não há mais dicas disponíveis.", Toast.LENGTH_SHORT).show()
             }else{
@@ -132,7 +154,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         range = 100
         tips = 3
         win = 50
-        lose = -15
+        lose = 10
         randomNumber(range)
         dificuldadeEscolhida = 1
     }
@@ -140,7 +162,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         tips = 3
         range = 200
         win = 80
-        lose = -35
+        lose = 35
         randomNumber(range)
         dificuldadeEscolhida = 2
     }
@@ -148,7 +170,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         tips = 1
         range = 500
         win = 100
-        lose = -50
+        lose = 50
         randomNumber(range)
         dificuldadeEscolhida = 3
     }
