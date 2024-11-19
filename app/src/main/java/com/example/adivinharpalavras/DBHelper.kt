@@ -123,7 +123,4 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         return results.take(3)
     }
-
-
-
 }

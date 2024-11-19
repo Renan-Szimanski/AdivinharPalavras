@@ -2,6 +2,7 @@ package com.example.adivinharpalavras
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -16,14 +17,14 @@ private lateinit var dbHelper: DBHelper
 
 class ActivityGame : AppCompatActivity() {
     val selPerfil = SelectPerfil(this)
-    private lateinit var correctWord: String
+    private var correctWord: String = ""
     private lateinit var word: TextView
     private lateinit var pntTxt: TextView
     private lateinit var palavra: String
     private var pontos = 0
 
     private val linhas: MutableList<String> by lazy {
-        assets.open("words.txt").bufferedReader().use { it.readLines().toMutableList() }
+        assets.open("words.txt").bufferedReader().use { it.readLines().toMutableList()}
     }
 
     @SuppressLint("ResourceAsColor")
@@ -71,6 +72,18 @@ class ActivityGame : AppCompatActivity() {
         }
     }
 
+
+
+    private fun carregarLinhas(arquivo: String): MutableList<String> {
+        return try {
+            assets.open(arquivo).bufferedReader().use { it.readLines().toMutableList() }
+        } catch (e: Exception) {
+            Log.e("ActivityGame", "Erro ao carregar arquivo $arquivo: ${e.message}")
+            Toast.makeText(this, "Erro ao carregar as palavras!", Toast.LENGTH_SHORT).show()
+            mutableListOf()
+        }
+    }
+
     private fun verificarResposta(resposta: String, difficulty: String?) {
         if (resposta.isEmpty()) {
             Toast.makeText(this, "Coloque uma palavra", Toast.LENGTH_SHORT).show()
@@ -105,19 +118,25 @@ class ActivityGame : AppCompatActivity() {
 
     private fun aleatorio() {
         if (linhas.isNotEmpty()) {
-            val randomNumber = Random.nextInt(linhas.size) // numero aleatorio do tamanho das linhas
+            val randomNumber = Random.nextInt(linhas.size)
             palavra = linhas[randomNumber]
             linhas.removeAt(randomNumber)
             correctWord = palavra
         } else {
+            correctWord = ""
             Toast.makeText(this, "Não há mais palavras!", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun easy() {
         aleatorio()
-        val middle = correctWord.substring(1, correctWord.length - 1)
-        word.text = "${correctWord.first()}${embaralharComFixos(middle)}${correctWord.last()}"
+
+        if (correctWord.length > 2) {
+            val middle = correctWord.substring(1, correctWord.length - 1)
+            word.text = "${correctWord.first()}${embaralharComFixos(middle)}${correctWord.last()}"
+        } else {
+            word.text = correctWord
+        }
     }
 
     private fun medium() {
