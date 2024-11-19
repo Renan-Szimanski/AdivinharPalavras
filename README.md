@@ -18,8 +18,8 @@ Já no ACERTE O NÚMERO, você consegue comprar dicas (-15pt) e se ganhar (+50pt
 
 
 ## COMO RODAR EM SEU COMPUTADOR:
-Eu utilizei o Android Studio no windows para programar, geralmente pode acontecer alguns erros/bugs ao importar arquivos de fora no Android Studio, destre vários o mais recorrente é o ANDROID_HOME
-para fazer a configuração é fácil, siga o passo-a-passo.
+Eu utilizei o Android Studio no windows para programar, geralmente pode acontecer alguns erros/bugs ao importar arquivos de fora no Android Studio, dentre vários o mais recorrente é o ANDROID_HOME
+para fazer a configuração é fácil, siga o passo-a-passo:
 
 1. Editar as variáveis de ambiente do sistema
 2. Clique no botão "variáveis de ambiente"
