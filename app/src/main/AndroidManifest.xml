@@ -16,9 +16,6 @@
             android:name=".ActivityGuessNumber"
             android:exported="false" />
         <activity
-            android:name=".activity_num_game"
-            android:exported="false" />
-        <activity
             android:name=".ActivityPerfil"
             android:exported="false" />
         <activity
