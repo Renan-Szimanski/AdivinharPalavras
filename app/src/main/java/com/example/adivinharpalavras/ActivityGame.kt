@@ -4,12 +4,15 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.adivinharpalavras.databinding.ActivityGameBinding
+import com.example.adivinharpalavras.databinding.CongradulationsDialogBinding
 import kotlin.random.Random
 
 private lateinit var binding: ActivityGameBinding
@@ -22,6 +25,7 @@ class ActivityGame : AppCompatActivity() {
     private lateinit var pntTxt: TextView
     private lateinit var palavra: String
     private var pontos = 0
+    private lateinit var dialog: AlertDialog
 
     private val linhas: MutableList<String> by lazy {
         assets.open("words.txt").bufferedReader().use { it.readLines().toMutableList()}
@@ -72,16 +76,18 @@ class ActivityGame : AppCompatActivity() {
         }
     }
 
+    fun shwDialog(){
+        val builder = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
+        val dialogCongBinding: CongradulationsDialogBinding = CongradulationsDialogBinding.inflate(
+            LayoutInflater.from(this))
+
+        builder.setView(dialogCongBinding.root)
+        dialog = builder.create()
+        dialog.show()
+
+        //continuar
 
 
-    private fun carregarLinhas(arquivo: String): MutableList<String> {
-        return try {
-            assets.open(arquivo).bufferedReader().use { it.readLines().toMutableList() }
-        } catch (e: Exception) {
-            Log.e("ActivityGame", "Erro ao carregar arquivo $arquivo: ${e.message}")
-            Toast.makeText(this, "Erro ao carregar as palavras!", Toast.LENGTH_SHORT).show()
-            mutableListOf()
-        }
     }
 
     private fun verificarResposta(resposta: String, difficulty: String?) {
