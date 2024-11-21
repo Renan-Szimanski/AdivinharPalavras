@@ -1,6 +1,7 @@
 package com.example.adivinharpalavras
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -26,6 +27,8 @@ class ActivityGame : AppCompatActivity() {
     private lateinit var palavra: String
     private var pontos = 0
     private lateinit var dialog: AlertDialog
+    private lateinit var mainActivity: MainActivity
+    private var difficulty: String? = null
 
     private val linhas: MutableList<String> by lazy {
         assets.open("words.txt").bufferedReader().use { it.readLines().toMutableList()}
@@ -42,7 +45,7 @@ class ActivityGame : AppCompatActivity() {
         word = binding.wordTitle
         pntTxt = binding.pnt
 
-        val difficulty = intent.getStringExtra("DIFICULDADE")
+        difficulty = intent.getStringExtra("DIFICULDADE")
         setDifficulty(difficulty)
 
         val nxtButton = binding.nextButtom
@@ -80,13 +83,26 @@ class ActivityGame : AppCompatActivity() {
         val builder = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
         val dialogCongBinding: CongradulationsDialogBinding = CongradulationsDialogBinding.inflate(
             LayoutInflater.from(this))
+        mainActivity = MainActivity()
 
         builder.setView(dialogCongBinding.root)
         dialog = builder.create()
         dialog.show()
 
-        //continuar
+        dialogCongBinding.returnMenu.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
+        dialogCongBinding.returnNum.setOnClickListener {
+            val intent = Intent(this, ActivityGuessNumber::class.java)
+            intent?.let {
+                it.putExtra("DIFICULDADE", difficulty)
+                startActivity(it)
+                dialog.dismiss()
+            }
+
+        }
 
     }
 
@@ -130,7 +146,7 @@ class ActivityGame : AppCompatActivity() {
             correctWord = palavra
         } else {
             correctWord = ""
-            Toast.makeText(this, "Não há mais palavras!", Toast.LENGTH_SHORT).show()
+            shwDialog()
         }
     }
 
