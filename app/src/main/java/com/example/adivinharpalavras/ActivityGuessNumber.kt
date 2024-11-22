@@ -35,6 +35,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
+
         showPoits = binding.showPoints
         adapterTips = AdapterTips(this)
         tipButton = binding.tipButton
@@ -57,7 +58,6 @@ class ActivityGuessNumber : AppCompatActivity() {
             }
         }
 
-
         btnNumber.setOnClickListener {
             verifyAnswer()
         }
@@ -66,6 +66,11 @@ class ActivityGuessNumber : AppCompatActivity() {
             dicas(currentNum)
         }
         initRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapterTips.clearTips(emptyList())
     }
 
     private fun verifyAnswer(){
@@ -129,6 +134,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         titulo.text = "Escolha um número de um a ${Companion.range}"
         pontos = selectPerfil.pontuacao(0)
         showPoits.text = pontos.toString()
+        adapterTips.clearTips(emptyList())
     }
 
     private fun dicas(currentNum: Int){

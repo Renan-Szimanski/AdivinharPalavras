@@ -35,4 +35,8 @@ class AdapterTips(
         myList.add(tips)
         notifyItemInserted(myList.size -1)
     }
+    fun clearTips(newList: List<String>){
+        myList.clear()
+        notifyDataSetChanged()
+    }
 }

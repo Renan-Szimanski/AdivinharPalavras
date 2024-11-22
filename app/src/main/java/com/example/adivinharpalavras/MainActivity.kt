@@ -76,10 +76,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun opennum(){
-        showDificultyDialog(2)
-    }
-
     private fun showDificultyDialog(games: Int) {
         val builder = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
         val dialogDiffBinding: DifficultDialogBinding = DifficultDialogBinding.inflate(LayoutInflater.from(this))
