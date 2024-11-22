@@ -139,8 +139,6 @@ class ActivityGuessNumber : AppCompatActivity() {
 
     private fun dicas(currentNum: Int){
         if (pontos > 5){
-            pontos = selectPerfil.pontuacao(-5)
-            showPoits.text = pontos.toString()
             if (tips < 1){
                 Toast.makeText(this, "Não há mais dicas disponíveis.", Toast.LENGTH_SHORT).show()
             }else{
@@ -149,6 +147,9 @@ class ActivityGuessNumber : AppCompatActivity() {
                 val bfrNum = Random.nextInt(1, currentNum)
 
                 adapterTips.addTips(Tips("Seu número está entre $bfrNum e $aftrNum."))
+
+                pontos = selectPerfil.pontuacao(-5)
+                showPoits.text = pontos.toString()
             }    
         }else{
             Toast.makeText(this, "Você não tem pontos suficientes!", Toast.LENGTH_SHORT).show()
@@ -168,7 +169,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         tips = 3
         range = 200
         win = 80
-        lose = 35
+        lose = 15
         randomNumber(range)
         dificuldadeEscolhida = 2
     }
@@ -176,7 +177,7 @@ class ActivityGuessNumber : AppCompatActivity() {
         tips = 1
         range = 500
         win = 100
-        lose = 50
+        lose = 20
         randomNumber(range)
         dificuldadeEscolhida = 3
     }
